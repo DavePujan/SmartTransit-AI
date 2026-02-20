@@ -8,6 +8,13 @@ import { useAuthStore } from '../../store/useAuthStore';
 export const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const { isAuthenticated, user, logout } = useAuthStore();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
 
     const { isAuthenticated, user, logout } = useAuthStore();
     const navigate = useNavigate();
@@ -76,6 +83,28 @@ export const Navbar = () => {
                             </Link>
                         </div>
                     )}
+                    
+                    {isAuthenticated ? (
+                        <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 pl-2 pr-3 py-1.5 rounded-full">
+                                <div className="bg-primary/10 text-primary p-1 rounded-full">
+                                    <User className="h-3.5 w-3.5" />
+                                </div>
+                                {user?.name.split(' ')[0]}
+                            </div>
+                            <Button variant="ghost" size="icon" onClick={handleLogout} className="text-slate-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20">
+                                <LogOut className="h-4 w-4" />
+                            </Button>
+                        </div>
+                    ) : (
+                        <Link to="/login">
+                            <Button variant="ghost" className="hidden lg:flex">Sign In</Button>
+                        </Link>
+                    )}
+                    
+                    <Link to="/optimize">
+                        <Button>Start Planning</Button>
+                    </Link>
                 </nav>
 
                 {/* Mobile Menu Toggle */}
@@ -128,6 +157,25 @@ export const Navbar = () => {
                                     </Link>
                                 </>
                             )}
+                          
+                            {isAuthenticated ? (
+                                <>
+                                    <div className="flex items-center gap-2 py-2 px-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                                        <User className="h-4 w-4 text-slate-500" />
+                                        <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{user?.name}</span>
+                                    </div>
+                                    <Button variant="outline" className="w-full justify-center text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 dark:border-red-900/50 dark:hover:bg-red-900/20" onClick={() => { handleLogout(); setMobileMenuOpen(false); }}>
+                                        <LogOut className="h-4 w-4 mr-2" /> Sign Out
+                                    </Button>
+                                </>
+                            ) : (
+                                <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
+                                    <Button variant="outline" className="w-full justify-center">Sign In</Button>
+                                </Link>
+                            )}
+                            <Link to="/optimize" onClick={() => setMobileMenuOpen(false)}>
+                                <Button className="w-full justify-center">Start Planning</Button>
+                            </Link>
                         </div>
                     </motion.div>
                 )}
