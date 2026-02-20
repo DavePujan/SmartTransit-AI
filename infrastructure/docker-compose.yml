@@ -27,7 +27,9 @@ services:
       - ml-service
 
   ml-service:
-    build: ../ml-service
+    build:
+      context: ../ml-service
+      network: host
     ports:
       - "8000:8000"
     volumes:

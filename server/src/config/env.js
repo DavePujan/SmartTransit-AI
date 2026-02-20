@@ -26,7 +26,7 @@ module.exports = {
     env: envVars.NODE_ENV,
     port: envVars.PORT,
     mongoose: {
-        url: envVars.MONGO_URI,
+        url: envVars.MONGO_URI.replace('localhost', '127.0.0.1'),
         options: {
             useNewUrlParser: true,
             useUnifiedTopology: true,
