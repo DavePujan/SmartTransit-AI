@@ -27,6 +27,6 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.13",
-    "swagger-autogen": "^2.23.7"
+    "swagger-autogen": "^2.9.2"
   }
 }

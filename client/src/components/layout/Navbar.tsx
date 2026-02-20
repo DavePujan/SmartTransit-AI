@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { Bus, Menu, X, LogOut, User } from 'lucide-react';
@@ -16,9 +16,6 @@ export const Navbar = () => {
         navigate('/');
     };
 
-    const { isAuthenticated, user, logout } = useAuthStore();
-    const navigate = useNavigate();
-
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 20);
@@ -26,11 +23,6 @@ export const Navbar = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
-
-    const handleLogout = () => {
-        logout();
-        navigate('/');
-    };
 
     return (
         <header
@@ -61,31 +53,6 @@ export const Navbar = () => {
 
                     {isAuthenticated ? (
                         <div className="flex items-center gap-4">
-                            <div className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-200">
-                                <User className="h-4 w-4" />
-                                <span>{user?.name || 'User'}</span>
-                            </div>
-                            <Button variant="ghost" size="sm" onClick={handleLogout} className="text-slate-600 dark:text-slate-300">
-                                <LogOut className="h-4 w-4 mr-2" />
-                                Sign Out
-                            </Button>
-                            <Link to="/optimize">
-                                <Button>Dashboard</Button>
-                            </Link>
-                        </div>
-                    ) : (
-                        <div className="flex items-center gap-4">
-                            <Link to="/login">
-                                <Button variant="ghost">Sign In</Button>
-                            </Link>
-                            <Link to="/register">
-                                <Button>Get Started</Button>
-                            </Link>
-                        </div>
-                    )}
-                    
-                    {isAuthenticated ? (
-                        <div className="flex items-center gap-4">
                             <div className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 pl-2 pr-3 py-1.5 rounded-full">
                                 <div className="bg-primary/10 text-primary p-1 rounded-full">
                                     <User className="h-3.5 w-3.5" />
@@ -101,7 +68,7 @@ export const Navbar = () => {
                             <Button variant="ghost" className="hidden lg:flex">Sign In</Button>
                         </Link>
                     )}
-                    
+
                     <Link to="/optimize">
                         <Button>Start Planning</Button>
                     </Link>
@@ -133,31 +100,6 @@ export const Navbar = () => {
                             {isAuthenticated && <Link to="/history" className="text-sm font-medium text-slate-600" onClick={() => setMobileMenuOpen(false)}>History</Link>}
                             <hr className="border-slate-100 dark:border-slate-800" />
 
-                            {isAuthenticated ? (
-                                <>
-                                    <div className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-200 py-2">
-                                        <User className="h-4 w-4" />
-                                        <span>{user?.name || 'User'}</span>
-                                    </div>
-                                    <Link to="/optimize" onClick={() => setMobileMenuOpen(false)}>
-                                        <Button className="w-full justify-center">Dashboard</Button>
-                                    </Link>
-                                    <Button variant="outline" className="w-full justify-center" onClick={() => { handleLogout(); setMobileMenuOpen(false); }}>
-                                        <LogOut className="h-4 w-4 mr-2" />
-                                        Sign Out
-                                    </Button>
-                                </>
-                            ) : (
-                                <>
-                                    <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
-                                        <Button variant="outline" className="w-full justify-center">Sign In</Button>
-                                    </Link>
-                                    <Link to="/register" onClick={() => setMobileMenuOpen(false)}>
-                                        <Button className="w-full justify-center">Get Started</Button>
-                                    </Link>
-                                </>
-                            )}
-                          
                             {isAuthenticated ? (
                                 <>
                                     <div className="flex items-center gap-2 py-2 px-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
