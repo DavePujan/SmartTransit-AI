@@ -2,22 +2,17 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Optimize from './pages/Optimize';
 import Results from './pages/Results';
+import History from './pages/History';
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-slate-50">
-        <nav className="bg-white shadow-sm border-b px-6 py-4">
-          <h1 className="text-xl font-bold text-slate-800">Smart Transit AI</h1>
-        </nav>
-        <main className="p-6">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/optimize" element={<Optimize />} />
-            <Route path="/results" element={<Results />} />
-          </Routes>
-        </main>
-      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/optimize" element={<Optimize />} />
+        <Route path="/results" element={<Results />} />
+        <Route path="/history" element={<History />} />
+      </Routes>
     </BrowserRouter>
   );
 }
